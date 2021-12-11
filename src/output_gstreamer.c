@@ -151,6 +151,7 @@ static void output_gstreamer_set_next_uri(const char *uri) {
 	gs_next_uri_ = (uri && *uri) ? strdup(uri) : NULL;
 }
 
+const char goServerUri[] = "http://127.0.0.1:2345/dlna?SourceUri=";
 static void output_gstreamer_set_uri(const char *uri,
 				     output_update_meta_cb_t meta_cb) {
 	Log_info("gstreamer", "Set uri to '%s'", uri);
