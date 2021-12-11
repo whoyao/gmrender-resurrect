@@ -42,6 +42,8 @@
 #include "output_module.h"
 #include "output_gstreamer.h"
 
+#include "httpclient/http.h"
+
 static double buffer_duration = 0.0; /* Buffer disbled by default, see #182 */
 
 static void scan_mime_list(void)
@@ -152,6 +154,18 @@ static void output_gstreamer_set_next_uri(const char *uri) {
 static void output_gstreamer_set_uri(const char *uri,
 				     output_update_meta_cb_t meta_cb) {
 	Log_info("gstreamer", "Set uri to '%s'", uri);
+
+    char* full_uri;
+    full_uri = malloc(strlen(goServerUri)+strlen(uri)+1); /* make space for the new string (should check the return value ...) */
+    strcpy(full_uri, goServerUri); /* copy name into the new var */
+    strcat(full_uri, uri); /* add the extension */
+    printf("full_uri: %s\n", full_uri);
+    ft_http_client_t *http = ft_http_new();
+    ft_http_set_timeout(http, 5000);
+    ft_http_sync_request(http, full_uri, M_GET);
+    ft_http_exit(http);
+    ft_http_destroy(http);
+
 	free(gsuri_);
 	gsuri_ = (uri && *uri) ? strdup(uri) : NULL;
 	meta_update_callback_ = meta_cb;
