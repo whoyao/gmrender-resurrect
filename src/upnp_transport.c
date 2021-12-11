@@ -550,7 +550,7 @@ static void update_meta_from_stream(const struct SongMetaData *meta) {
 }
 
 /* UPnP action handlers */
-const char goServerUri[] = "http://127.0.0.1:2345/dlna?SourceUri=";
+//const char goServerUri[] = "http://127.0.0.1:2345/dlna?SourceUri=";
 
 static int set_avtransport_uri(struct action_event *event)
 {
