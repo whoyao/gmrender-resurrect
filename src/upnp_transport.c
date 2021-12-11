@@ -550,7 +550,7 @@ static void update_meta_from_stream(const struct SongMetaData *meta) {
 }
 
 /* UPnP action handlers */
-//const char goServerUri[] = "http://127.0.0.1:2345/dlna?SourceUri=";
+const char goServerUri[] = "http://127.0.0.1:2345/dlna?SourceUri=";
 
 static int set_avtransport_uri(struct action_event *event)
 {
@@ -562,17 +562,16 @@ static int set_avtransport_uri(struct action_event *event)
 		return -1;
 	}
 
-//    char* full_uri;
-//    full_uri = malloc(strlen(goServerUri)+strlen(uri)+1); /* make space for the new string (should check the return value ...) */
-//    strcpy(full_uri, goServerUri); /* copy name into the new var */
-//    strcat(full_uri, uri); /* add the extension */
-//    printf("full_uri: %s\n", full_uri);
-//
-//    ft_http_client_t *http = ft_http_new();
-//    ft_http_set_timeout(http, 5000);
-//    ft_http_sync_request(http, full_uri, M_GET);
-//    ft_http_exit(http);
-//    ft_http_destroy(http);
+    char* full_uri;
+    full_uri = malloc(strlen(goServerUri)+strlen(uri)+1); /* make space for the new string (should check the return value ...) */
+    strcpy(full_uri, goServerUri); /* copy name into the new var */
+    strcat(full_uri, uri); /* add the extension */
+
+    ft_http_client_t *http = ft_http_new();
+    ft_http_set_timeout(http, 5000);
+    ft_http_sync_request(http, full_uri, M_GET);
+    ft_http_exit(http);
+    ft_http_destroy(http);
 
     service_lock();
 	const char *meta = upnp_get_string(event, "CurrentURIMetaData");
